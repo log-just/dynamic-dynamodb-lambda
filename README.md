@@ -1,6 +1,6 @@
 # Dynamic DynamoDB - lambda
- use DynamoDB autoscaling with lambda!<br />
- it's [Dynamic DynamoDB](https://github.com/caolan/async)'s lambda version
+ Use DynamoDB autoscaling with lambda!<br />
+ It's [Dynamic DynamoDB](https://github.com/caolan/async)'s lambda version
 
 ##### This is not stable yet. so before use, Test it please
 ##### Any report/suggestion, welcome
