@@ -80,32 +80,30 @@ exports.handler = function(event, context) {
             // Callback - WATERFALL
             function(result){
                 
-                console.log(result);
-                
+                resultString = result.tableName+' : '+result.result;
+                unhandledString = item.tableName+' :unhandled error';
+                if (result.detail)
+                {
+                    resultString += ' : '+result.detail;
+                }
+
                 if (result.code) {
                     switch (result.code) {
                     case 'update':
-                        result_updated.push(result);
+                        result_updated.push(resultString);
                         break;
                     case 'pass':
-                        result_passed.push(result);
+                        result_passed.push(resultString);
                         break;
                     case 'error':
-                        result_failed.push(result);
+                        result_failed.push(resultString);
                         break;
                     default:
-                        result_failed.push({
-                            tableName : item.tableName,
-                            result : 'unhandled error'
-                        });
+                        result_failed.push(unhandledString);
                     }
                 }
                 else {
-                    result_failed.push(
-                        {
-                            tableName : item.tableName,
-                            result : 'unhandled error'
-                        });
+                    result_failed.push(unhandledString);
                 }
                 callback_outer(null);
                 

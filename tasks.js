@@ -16,10 +16,8 @@ exports.init = function(config) {
 
 // get Table info
 exports.getTask_tableDesc = function(tableName, callback) {
-    console.log('====== '+tableName+' - 1. tabledesc Task Start======');
     var params = { TableName: tableName };
     env.db.describeTable(params, function(err, data) {
-        console.log('====== '+tableName+' - 1. tabledesc get Result======');
         if (err) {
             callback({
                 tableName : tableName,
@@ -41,7 +39,6 @@ exports.getTask_tableDesc = function(tableName, callback) {
 
 // get Table's consumed ReadCapacity (max)
 exports.getTask_consumedReadCapa = function(tableName, callback) {
-    console.log('====== '+tableName+' - 2. getConsumedReadCapa Task Start======');
     var params = {
         EndTime: env.endTime, // required 
         MetricName: 'ConsumedReadCapacityUnits', // required 
@@ -57,7 +54,6 @@ exports.getTask_consumedReadCapa = function(tableName, callback) {
         Unit: 'Count'
     };
     env.cloudwatch.getMetricStatistics(params, function(err, data) {
-        console.log('====== '+tableName+' - 2. getConsumedReadCapa get Result======');
         if (err) {
             callback({
                 tableName : tableName,
@@ -74,7 +70,6 @@ exports.getTask_consumedReadCapa = function(tableName, callback) {
 
 // get Table's consumed WriteCapacity (max)
 exports.getTask_consumedWriteCapa = function(tableName, callback) {
-    console.log('====== '+tableName+' - 3. consumedWriteCapa Task Start======');
     var params = {
         EndTime: env.endTime, // required 
         MetricName: 'ConsumedWriteCapacityUnits', // required 
@@ -90,7 +85,6 @@ exports.getTask_consumedWriteCapa = function(tableName, callback) {
         Unit: 'Count'
     };
     env.cloudwatch.getMetricStatistics(params, function(err, data) {
-        console.log('====== '+tableName+' - 3. consumedWriteCapa get Result======');
         if (err) {
             callback({
                 tableName : tableName,
@@ -107,8 +101,6 @@ exports.getTask_consumedWriteCapa = function(tableName, callback) {
 
 // calculate Capacity to update
 exports.getTask_newCapa = function(capa,used,upperThsd,lowerThsd,increseAmt,decreseAmt,base) {
-    console.log('====== ??? - 4. calculate Start======');
-    
     var rate = (used/capa)*100;
     if ( rate > upperThsd )
     {
@@ -126,7 +118,6 @@ exports.getTask_newCapa = function(capa,used,upperThsd,lowerThsd,increseAmt,decr
 
 // update Table with now Capacity
 exports.setTask_updateTable = function(tableName,readCapa,readUsed,newReadCapa,writeCapa,writeUsed,newWriteCapa,callback) {
-    console.log('====== '+tableName+' - 5. tableUpdate Start======');
     var params = {
         TableName: tableName, // required 
         ProvisionedThroughput: {
@@ -135,7 +126,6 @@ exports.setTask_updateTable = function(tableName,readCapa,readUsed,newReadCapa,w
         }
     };
     env.db.updateTable(params, function(err, data) {
-        console.log('====== '+tableName+' - 5. ableUpdate get Result======');
         if (err) {
             callback({
                 tableName : tableName,
