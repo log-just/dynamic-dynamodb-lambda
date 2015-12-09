@@ -15,7 +15,7 @@
 2. `$ npm install` to download npm modules
 3. modify **config.json** for your configuration.
   * almost same options with [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb#basic-usage)
-  ```
+   ```
   {
     region : 'us-west-2',
     checkIntervalMin : 5, //check internal - same with lambda function scheduled rate
