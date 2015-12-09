@@ -3,4 +3,5 @@ node_modules/
 
 # node-lambda files
 .env
+deploy.env
 event.json
