@@ -18,7 +18,7 @@
    ```
   {
     region : 'us-west-2',
-    checkIntervalMin : 5, //check internal - same with lambda function scheduled rate
+    checkIntervalMin : 5,  // capa. usage check period - recommend set to same with lambda function's scheduled rate
     tables :
         [
             {
