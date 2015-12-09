@@ -17,8 +17,9 @@
   * almost same options with [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb#basic-usage)
    ```
   {
-    region : 'us-west-2',
-    checkIntervalMin : 5,  // capa. usage check period - recommend set to same with lambda function's scheduled rate
+    region : 'us-west-2', // region
+    checkIntervalMin : 5, // capa. usage check period
+                          //  - recommend set to same value with lambda function's scheduled rate
     tables :
         [
             {
