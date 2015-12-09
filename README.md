@@ -13,7 +13,8 @@
 ### How to use
 1. `$ git clone https://github.com/rockeee/dynamic-dynamodb-lambda.git` or download zip
 2. `$ npm install` to download npm modules
-3. modify **config.json** for your configuration. use almost same options with [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb#basic-usage)
+3. modify **config.json** for your configuration.
+  * almost same options with [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb#basic-usage)
 4. deploy to lamda function with your favorite method (ex. [node-lambda](https://www.npmjs.com/package/node-lambda))
 5. check lambda function's configuration
   * use **Scheduled Event** in **Event sources**
