@@ -5,12 +5,12 @@
 ##### This is not stable yet. so before use, Test it please
 ##### Any report/suggestion, welcome
 
-#### File Structure
+## File Structure
 * **index.js** - main handler & flow source. using [async](https://github.com/caolan/async)
 * **tasks.js** - Detail work sources. using AWS SDK
 * **config.js** - capacity scaling rule configuration
 
-#### How to use
+## How to use
 1. `$ git clone https://github.com/rockeee/dynamic-dynamodb-lambda.git` or download zip
 2. `$ npm install` to download npm modules
 3. modify **config.json** for your configuration.
@@ -50,5 +50,5 @@
 }
 ```
 
-#### Roadmap
+## Roadmap
 * add SNS noti.
