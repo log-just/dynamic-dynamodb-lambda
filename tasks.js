@@ -1,17 +1,20 @@
 var env = { };
 
+// initialize
 exports.init = function(config) {
-    env.AWS = require('aws-sdk') // region of Table
-    env.AWS.config.update({region: config.region});
+    env.AWS = require('aws-sdk') // AWS object
+    env.AWS.config.update({region: config.region}); // update Region info
     env.db = new env.AWS.DynamoDB(); // dynamoDB object
     env.cloudwatch = new env.AWS.CloudWatch(); // cloudWatch object
     env.checkIntervalMin = config.checkIntervalMin; // used capa check Period
+    // startTime,endTime for using cloudwatch API
     env.startTime = new Date();
     env.endTime = new Date();
     env.startTime.setTime(env.endTime-(60000*env.checkIntervalMin));
     env.decreaseDailyLimit = 4;
 };
 
+// get Table info
 exports.getTask_tableDesc = function(tableName, callback) {
     console.log('====== '+tableName+' - 1. tabledesc Task Start======');
     var params = { TableName: tableName };
@@ -36,6 +39,7 @@ exports.getTask_tableDesc = function(tableName, callback) {
     });
 };
 
+// get Table's consumed ReadCapacity (max)
 exports.getTask_consumedReadCapa = function(tableName, callback) {
     console.log('====== '+tableName+' - 2. getConsumedReadCapa Task Start======');
     var params = {
@@ -68,6 +72,7 @@ exports.getTask_consumedReadCapa = function(tableName, callback) {
     }); 
 };
 
+// get Table's consumed WriteCapacity (max)
 exports.getTask_consumedWriteCapa = function(tableName, callback) {
     console.log('====== '+tableName+' - 3. consumedWriteCapa Task Start======');
     var params = {
@@ -100,6 +105,7 @@ exports.getTask_consumedWriteCapa = function(tableName, callback) {
     });      
 };
 
+// calculate Capacity to update
 exports.getTask_newCapa = function(capa,used,upperThsd,lowerThsd,increseAmt,decreseAmt,base) {
     console.log('====== ??? - 4. calculate Start======');
     
@@ -118,6 +124,7 @@ exports.getTask_newCapa = function(capa,used,upperThsd,lowerThsd,increseAmt,decr
     }
 };
 
+// update Table with now Capacity
 exports.setTask_updateTable = function(tableName,readCapa,readUsed,newReadCapa,writeCapa,writeUsed,newWriteCapa,callback) {
     console.log('====== '+tableName+' - 5. tableUpdate Start======');
     var params = {

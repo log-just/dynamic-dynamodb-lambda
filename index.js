@@ -1,5 +1,3 @@
-console.log('Loading function');
-
 exports.handler = function(event, context) {
     
     var async = require("async");
