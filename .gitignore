@@ -1,0 +1,6 @@
+# npm modules
+node_modules/
+
+# node-lambda files
+.env
+event.json

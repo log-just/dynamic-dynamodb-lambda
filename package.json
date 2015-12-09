@@ -1,0 +1,27 @@
+{
+  "name": "dynamic-dynamo-lambda",
+  "version": "0.1.0",
+  "description": "use dynamic dynamo by lambda!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rockeee <cuhaha1203@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^1.5.0",
+    "aws-sdk": "^2.2.20"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "dynamoDB"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rockeee/dynamic-dynamodb-lambda.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rockeee/dynamic-dynamodb-lambda/issues"
+  },
+  "homepage": "https://github.com/rockeee/dynamic-dynamodb-lambda"
+}
