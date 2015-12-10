@@ -3,7 +3,10 @@
  It's [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb)'s lambda version
 
 ##### This is not stable yet. so before use, Test it please
-##### Any report/suggestion, welcome
+##### plese give me any report/suggestion, Welcome
+
+## Feature
+* autoscale DynamoDB's read/write provisioned read/write capacity
 
 ## File Structure
 * **index.js** - main handler & flow source. using [async](https://github.com/caolan/async)
@@ -16,7 +19,7 @@
 3. modify **config.js** for your configuration.
   * almost same with [Dynamic DynamoDB's option](https://github.com/sebdah/dynamic-dynamodb#basic-usage)
    ```
-  {
+  module.exports = {
     region : 'us-west-2', // region
     checkIntervalMin : 5, // capa. usage check period
                           //  - recommend set to same value with lambda function's scheduled rate
@@ -51,7 +54,7 @@
             }
             // additional table...
         ]
-}
+};
 ```
 4. deploy to lamda function with your favorite method (ex. [node-lambda](https://www.npmjs.com/package/node-lambda))
 5. check lambda function's configuration
@@ -89,4 +92,5 @@
 ```
 
 ## Roadmap
-* add SNS noti.
+* more stable
+* add SNS noti when scaled/failed
