@@ -7,6 +7,7 @@
 
 ## Feature
 * autoscale DynamoDB's read/write provisioned read/write capacity
+* run by lambda functon with scheduled event
 
 ## File Structure
 * **index.js** - main handler & flow source. using [async](https://github.com/caolan/async)
