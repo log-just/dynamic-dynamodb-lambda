@@ -1,6 +1,6 @@
 # Dynamic DynamoDB - lambda
  Use DynamoDB autoscaling with lambda!<br />
- It's [Dynamic DynamoDB](https://github.com/caolan/async)'s lambda version
+ It's [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb)'s lambda version
 
 ##### This is not stable yet. so before use, Test it please
 ##### Any report/suggestion, welcome
@@ -13,8 +13,8 @@
 ## How to use
 1. `$ git clone https://github.com/rockeee/dynamic-dynamodb-lambda.git` or download zip
 2. `$ npm install` to download npm modules
-3. modify **config.json** for your configuration.
-  * almost same options with [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb#basic-usage)
+3. modify **config.js** for your configuration.
+  * almost same with [Dynamic DynamoDB's option](https://github.com/sebdah/dynamic-dynamodb#basic-usage)
    ```
   {
     region : 'us-west-2', // region
