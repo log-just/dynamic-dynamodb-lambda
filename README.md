@@ -19,7 +19,7 @@
 2. `$ npm install` to download npm modules
 3. modify **config.js** for your configuration.
   * almost same with [Dynamic DynamoDB's option](https://github.com/sebdah/dynamic-dynamodb#basic-usage)
-   ```
+   ```js
   module.exports = {
     region : 'us-west-2', // region
     checkIntervalMin : 5, // capa. usage check period
