@@ -1,12 +1,12 @@
 # Dynamic DynamoDB - lambda
  Use DynamoDB autoscaling with lambda!<br />
- It's [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb)'s lambda version
+ It's [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb)'s simple lambda version
 
 ##### This is not stable yet. so before use, Test it please
-##### plese give me any report/suggestion, Welcome
+##### please give me any report/suggestion, Welcome
 
 ## Feature
-* autoscale DynamoDB's read/write provisioned read/write capacity
+* autoscale DynamoDB's provisioned read/write capacity
 * run by lambda functon with scheduled event
 
 ## File Structure
