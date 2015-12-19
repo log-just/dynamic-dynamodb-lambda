@@ -1,17 +1,17 @@
 exports.handler = function(event, context) {
-    
+
     var async = require("async");
     var config = require('./config.js');
     var tasks = require('./tasks.js');
     tasks.init(config);
-    
+
     var result_failed = [];
     var result_updated = [];
     var result_passed = [];
-    
+
     async.each(config.tables,function(item,callback_outer){
         async.waterfall([
-            
+
             // 1. get Data by AWS API
             function(callback){
                 async.parallel([
@@ -31,12 +31,12 @@ exports.handler = function(event, context) {
                         var writeUsed = results[2];
                         var status = results[0].status;
                         var remainDecreaseNum = results[0].remainDecreaseNum;
-                        
+
                         callback(null,readCapa,readUsed,writeCapa,writeUsed,status,remainDecreaseNum);
                     }
                 });
             },
-            
+
             // 2. calculate new read/write Capacity
             function(readCapa,readUsed,writeCapa,writeUsed,status,remainDecreaseNum,callback){
                 if (status !== 'ACTIVE') {
@@ -61,8 +61,8 @@ exports.handler = function(event, context) {
                                 tableName : item.tableName,
                                 code : 'pass',
                                 result : 'no need to update Table',
-                                detail : 'read - capacity:'+readCapa+', maxConsumed:'+readUsed
-                                    +' // write - capacity:'+writeCapa+', maxConsumed:'+writeUsed
+                                detail : 'read - capacity:'+readCapa+', consumed:'+readUsed
+                                    +' // write - capacity:'+writeCapa+', consumed:'+writeUsed
                                 });
                     }
                     else {
@@ -70,16 +70,16 @@ exports.handler = function(event, context) {
                     }
                 }
             },
-            
+
             // 3. update read/write Capacity by AWS API
             function(readCapa,readUsed,newReadCapa,writeCapa,writeUsed,newWriteCapa,callback){
                 tasks.setTask_updateTable(item.tableName,readCapa,readUsed,newReadCapa,writeCapa,writeUsed,newWriteCapa,callback); }
             ],
-            
-            
+
+
             // Callback - WATERFALL
             function(result){
-                
+
                 resultString = result.tableName+' : '+result.result;
                 unhandledString = item.tableName+' :unhandled error';
                 if (result.detail)
@@ -106,23 +106,23 @@ exports.handler = function(event, context) {
                     result_failed.push(unhandledString);
                 }
                 callback_outer(null);
-                
+
             }
         );
-    
+
     }
     ,
     //callback_outer - EACH
     function(err){
-        
+
         var result_concat = result_failed.concat(result_updated,result_passed);
-        
+
         if (result_failed.length > 0) {
             context.fail(result_concat);
         }
         else {
             context.succeed(result_concat);
         }
-        
+
     });
 };

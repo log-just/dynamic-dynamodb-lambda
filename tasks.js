@@ -37,15 +37,15 @@ exports.getTask_tableDesc = function(tableName, callback) {
     });
 };
 
-// get Table's consumed ReadCapacity (max)
+// get Table's consumed ReadCapacity (avg)
 exports.getTask_consumedReadCapa = function(tableName, callback) {
     var params = {
-        EndTime: env.endTime, // required 
-        MetricName: 'ConsumedReadCapacityUnits', // required 
+        EndTime: env.endTime, // required
+        MetricName: 'ConsumedReadCapacityUnits', // required
         Namespace: 'AWS/DynamoDB', //required
         Period: (env.checkIntervalMin*60), // required
         StartTime: env.startTime, // required
-        Statistics: [ 'Maximum' ],
+        Statistics: [ 'Average' ],
         Dimensions: [
         {
             Name: 'TableName', // required
@@ -63,20 +63,20 @@ exports.getTask_consumedReadCapa = function(tableName, callback) {
             });
         }
         else {
-            callback(null,data.Datapoints.length === 0 ? 0 : data.Datapoints[0].Maximum);
+            callback(null,data.Datapoints.length === 0 ? 0 : data.Datapoints[0].Average);
         }
-    }); 
+    });
 };
 
-// get Table's consumed WriteCapacity (max)
+// get Table's consumed WriteCapacity (avg)
 exports.getTask_consumedWriteCapa = function(tableName, callback) {
     var params = {
-        EndTime: env.endTime, // required 
-        MetricName: 'ConsumedWriteCapacityUnits', // required 
+        EndTime: env.endTime, // required
+        MetricName: 'ConsumedWriteCapacityUnits', // required
         Namespace: 'AWS/DynamoDB', //required
         Period: (env.checkIntervalMin*60), // required
         StartTime: env.startTime, // required
-        Statistics: [ 'Maximum' ],
+        Statistics: [ 'Average' ],
         Dimensions: [
         {
             Name: 'TableName', // required
@@ -94,9 +94,9 @@ exports.getTask_consumedWriteCapa = function(tableName, callback) {
             });
         }
         else {
-            callback(null,data.Datapoints.length === 0 ? 0 : data.Datapoints[0].Maximum);
+            callback(null,data.Datapoints.length === 0 ? 0 : data.Datapoints[0].Average);
         }
-    });      
+    });
 };
 
 // calculate Capacity to update
@@ -119,7 +119,7 @@ exports.getTask_newCapa = function(capa,used,upperThsd,lowerThsd,increseAmt,decr
 // update Table with now Capacity
 exports.setTask_updateTable = function(tableName,readCapa,readUsed,newReadCapa,writeCapa,writeUsed,newWriteCapa,callback) {
     var params = {
-        TableName: tableName, // required 
+        TableName: tableName, // required
         ProvisionedThroughput: {
             ReadCapacityUnits: newReadCapa, /* required */
             WriteCapacityUnits: newWriteCapa /* required */
@@ -139,8 +139,8 @@ exports.setTask_updateTable = function(tableName,readCapa,readUsed,newReadCapa,w
                 tableName : tableName,
                 code : 'update',
                 result : 'table capacity updated',
-                detail : 'read - capacity:'+readCapa+', maxConsumed:'+readUsed+' => changedCapa:'+newReadCapa
-                        +' // write - capacity:'+writeCapa+', maxConsumed:'+writeUsed+' => changedCapa:'+newWriteCapa
+                detail : 'read - capacity:'+readCapa+', consumed:'+readUsed+' => changedCapa:'+newReadCapa
+                        +' // write - capacity:'+writeCapa+', consumed:'+writeUsed+' => changedCapa:'+newWriteCapa
             });
         }
     });

@@ -30,7 +30,7 @@ module.exports = {
             decrease_writes_with : 0, // to don't scale down writes
             base_writes : 3
             }
-            
+
             //...
         ]
 };
