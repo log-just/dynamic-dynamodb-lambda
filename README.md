@@ -17,13 +17,12 @@
 ## How to use
 1. `$ git clone https://github.com/rockeee/dynamic-dynamodb-lambda.git` or download zip
 2. `$ npm install` to download npm modules
-3. modify **config.js** for your configuration.
+3. modify `config.js` for your configuration.
   * almost same with [Dynamic DynamoDB's option](https://github.com/sebdah/dynamic-dynamodb#basic-usage)
    ```js
   module.exports = {
     region : 'us-west-2', // region
-    checkIntervalMin : 5, // capa. usage check period
-                          //  - recommend set to same value with lambda function's scheduled rate
+    timeframeMin : 5, // evaluation timeframe (minute)
     tables :
         [
             {
@@ -59,9 +58,8 @@
 ```
 4. deploy to lamda function with your favorite method (ex. [node-lambda](https://www.npmjs.com/package/node-lambda))
 5. check lambda function's configuration
-  * use **Scheduled Event** in **Event sources**
-    * **recommend** - set **rate** to equal with **checkIntervalMin** value at **config.json**
-  * set **role** permission
+  * use `Scheduled Event` in `Event sources`. set `rate` to desired check interval (at least 1minute)
+  * set `role` permission
     * for now, `dynamodb:DescribeTable` `dynamodb:DescribeTable` `CloudWatch:getMetricStatistics` required
     * example policy
     ```json
