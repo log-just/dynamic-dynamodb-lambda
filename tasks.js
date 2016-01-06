@@ -6,11 +6,11 @@ exports.init = function(config) {
     env.AWS.config.update({region: config.region}); // update Region info
     env.db = new env.AWS.DynamoDB(); // dynamoDB object
     env.cloudwatch = new env.AWS.CloudWatch(); // cloudWatch object
-    env.checkIntervalMin = config.checkIntervalMin; // used capa check Period
+    env.timeframeMin = config.timeframeMin; // used capa check Period
     // startTime,endTime for using cloudwatch API
     env.startTime = new Date();
     env.endTime = new Date();
-    env.startTime.setTime(env.endTime-(60000*env.checkIntervalMin));
+    env.startTime.setTime(env.endTime-(60000*env.timeframeMin));
     env.decreaseDailyLimit = 4;
 };
 
@@ -43,7 +43,7 @@ exports.getTask_consumedReadCapa = function(tableName, callback) {
         EndTime: env.endTime, // required
         MetricName: 'ConsumedReadCapacityUnits', // required
         Namespace: 'AWS/DynamoDB', //required
-        Period: (env.checkIntervalMin*60), // required
+        Period: (env.timeframeMin*60), // required
         StartTime: env.startTime, // required
         Statistics: [ 'Average' ],
         Dimensions: [
@@ -74,7 +74,7 @@ exports.getTask_consumedWriteCapa = function(tableName, callback) {
         EndTime: env.endTime, // required
         MetricName: 'ConsumedWriteCapacityUnits', // required
         Namespace: 'AWS/DynamoDB', //required
-        Period: (env.checkIntervalMin*60), // required
+        Period: (env.timeframeMin*60), // required
         StartTime: env.startTime, // required
         Statistics: [ 'Average' ],
         Dimensions: [

@@ -1,6 +1,6 @@
 module.exports = {
     region : 'us-west-2',
-    checkIntervalMin : 5, //check internal - same with lambda function scheduled rate
+    timeframeMin : 5, // evaluation timeframe (minute)
     tables :
         [
             {
