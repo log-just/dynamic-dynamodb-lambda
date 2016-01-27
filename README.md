@@ -58,9 +58,9 @@
 ```
 4. deploy to lamda function with your favorite method (just zip, or use tool like [node-lambda](https://www.npmjs.com/package/node-lambda))
 5. check lambda function's configuration
-  * set `Cloudwatch Event Rule` to run your lambda function <br />for detail, refer [this](https://aws.amazon.com/blogs/aws/new-cloudwatch-events-track-and-respond-to-changes-to-your-aws-resources/)
+  * set `Cloudwatch Event Rule` to run your lambda function. for detail, refer [this](https://aws.amazon.com/blogs/aws/new-cloudwatch-events-track-and-respond-to-changes-to-your-aws-resources/)
   * set & attach `role` to lambda function
-  * example policy
+  * example role policy
    ```json
     {
     "Version": "2012-10-17",
