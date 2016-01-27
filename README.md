@@ -2,7 +2,7 @@
  Use DynamoDB autoscaling with lambda!<br />
  It's [Dynamic DynamoDB](https://github.com/sebdah/dynamic-dynamodb)'s simple lambda version
 
-##### This is not stable yet. so before use, Test it please
+##### functional/running test passed. but before use, Test it please
 ##### please give me any report/suggestion, Welcome
 
 ## Feature
@@ -56,13 +56,12 @@
         ]
 };
 ```
-4. deploy to lamda function with your favorite method (ex. [node-lambda](https://www.npmjs.com/package/node-lambda))
+4. deploy to lamda function with your favorite method (just zip, or use tool like [node-lambda](https://www.npmjs.com/package/node-lambda))
 5. check lambda function's configuration
-  * use `Scheduled Event` in `Event sources`. set `rate` to desired check interval (at least 1minute)
-  * set `role` permission
-    * for now, `dynamodb:DescribeTable` `dynamodb:DescribeTable` `CloudWatch:getMetricStatistics` required
-    * example policy
-    ```json
+  * set `Cloudwatch Event Rule` to run your lambda function <br />for detail, refer [this](https://aws.amazon.com/blogs/aws/new-cloudwatch-events-track-and-respond-to-changes-to-your-aws-resources/)
+  * set & attach `role` to lambda function
+  * example policy
+   ```json
     {
     "Version": "2012-10-17",
     "Statement": [
