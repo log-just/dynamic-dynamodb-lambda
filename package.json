@@ -7,10 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "rockeee <cuhaha1203@gmail.com>",
+  "contributors": [{"name":"Bails Pierre", "email":"bails@getredbird.com"}],
   "license": "MIT",
   "dependencies": {
     "async": "^1.5.0",
-    "aws-sdk": "^2.2.20"
+    "aws-sdk": "^2.2.20",
+    "dynamo-doc": "^0.1.1"
   },
   "devDependencies": {},
   "keywords": [
