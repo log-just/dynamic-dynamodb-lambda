@@ -1,7 +1,7 @@
-exports.handler = function(event, context) {
+'use strict';
 
+function dynamicDynamoDB(config, callbackReturn){
     var async = require("async");
-    var config = require('./config.js');
     var tasks = require('./tasks.js');
     tasks.init(config);
 
@@ -79,9 +79,8 @@ exports.handler = function(event, context) {
 
             // Callback - WATERFALL
             function(result){
-
-                resultString = result.tableName+' : '+result.result;
-                unhandledString = item.tableName+' :unhandled error';
+                var resultString = result.tableName+' : '+result.result;
+                var unhandledString = item.tableName+' :unhandled error';
                 if (result.detail)
                 {
                     resultString += ' : '+result.detail;
@@ -118,11 +117,35 @@ exports.handler = function(event, context) {
         var result_concat = result_failed.concat(result_updated,result_passed);
 
         if (result_failed.length > 0) {
-            context.fail(result_concat);
+            callbackReturn(result_concat);
         }
         else {
-            context.succeed(result_concat);
+            callbackReturn(null, result_concat);
         }
 
+    });
+}
+
+exports.handler = function(event, context, callback) { 
+    var doc = require('dynamo-doc');
+    var AWS = require('aws-sdk');
+    var dynamodb = new AWS.DynamoDB();
+    
+    var params = {
+      TableName: 'configuration', // Table name
+      Key: {
+        app: {S: "dynamicDynamoDB"} // Key
+      }
+    };
+
+	//Load config in Dynamo DB table
+    dynamodb.getItem(params, function(err, data) {
+      if (err) console.log(err, err.stack); // an error occurred
+      else{
+          doc.dynamoToJs(data.Item, function(err, item) {
+            var conf = item.conf;
+            dynamicDynamoDB(conf, callback);
+          });
+      }
     });
 };
