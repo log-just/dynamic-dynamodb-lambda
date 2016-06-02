@@ -45,7 +45,7 @@ exports.getTask_consumedReadCapa = function(tableName, callback) {
         Namespace: 'AWS/DynamoDB', //required
         Period: (env.timeframeMin*60), // required
         StartTime: env.startTime, // required
-        Statistics: [ 'Average' ],
+        Statistics: [ 'Sum' ],
         Dimensions: [
         {
             Name: 'TableName', // required
@@ -63,7 +63,7 @@ exports.getTask_consumedReadCapa = function(tableName, callback) {
             });
         }
         else {
-            callback(null,data.Datapoints.length === 0 ? 0 : data.Datapoints[0].Average);
+            callback(null,data.Datapoints.length === 0 ? 0 : data.Datapoints[0].Sum/env.timeframeMin/60);
         }
     });
 };
@@ -76,7 +76,7 @@ exports.getTask_consumedWriteCapa = function(tableName, callback) {
         Namespace: 'AWS/DynamoDB', //required
         Period: (env.timeframeMin*60), // required
         StartTime: env.startTime, // required
-        Statistics: [ 'Average' ],
+        Statistics: [ 'Sum' ],
         Dimensions: [
         {
             Name: 'TableName', // required
@@ -94,7 +94,7 @@ exports.getTask_consumedWriteCapa = function(tableName, callback) {
             });
         }
         else {
-            callback(null,data.Datapoints.length === 0 ? 0 : data.Datapoints[0].Average);
+            callback(null,data.Datapoints.length === 0 ? 0 : data.Datapoints[0].Sum/env.timeframeMin/60);
         }
     });
 };
