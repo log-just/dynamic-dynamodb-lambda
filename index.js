@@ -39,6 +39,9 @@ exports.handler = function(event, context) {
 
             // 2. calculate new read/write Capacity
             function(readCapa,readUsed,writeCapa,writeUsed,status,remainDecreaseNum,callback){
+                var newReadCapa= tasks.getTask_newCapa(readCapa,readUsed,item.reads_upper_threshold,item.reads_lower_threshold,item.increase_reads_with,item.decrease_reads_with,item.base_reads,item.high_reads);
+                var newWriteCapa= tasks.getTask_newCapa(writeCapa,writeUsed,item.writes_upper_threshold,item.writes_lower_threshold,item.increase_writes_with,item.decrease_writes_with,item.base_writes,item.high_reads);
+
                 if (status !== 'ACTIVE') {
                     callback({
                                 tableName : item.tableName,
@@ -46,16 +49,24 @@ exports.handler = function(event, context) {
                                 result : 'status is not ACTIVE'
                             });
                 }
-                else if (remainDecreaseNum === 0) {
+                // If we are out of decreases and there are no increases for read or write
+                else if (remainDecreaseNum === 0 && readCapa === Math.max(readCapa, newReadCapa) && writeCapa === Math.max(writeCapa, newWriteCapa) && (readCapa !== newReadCapa || writeCapa !== newWriteCapa)) {
                     callback({
                                 tableName : item.tableName,
                                 code : 'pass',
-                                result : 'Depleted today\'s # of decrease throughput'
+                                result : 'Depleted today\'s # of decrease throughput',
+                                detail : 'read - capacity:'+readCapa+', decreased capacity:'+newReadCapa
+                                    +' // write - capacity:'+writeCapa+', decreased capacity:'+newWriteCapa
                             });
                 }
                 else {
-                    var newReadCapa= tasks.getTask_newCapa(readCapa,readUsed,item.reads_upper_threshold,item.reads_lower_threshold,item.increase_reads_with,item.decrease_reads_with,item.base_reads);
-                    var newWriteCapa= tasks.getTask_newCapa(writeCapa,writeUsed,item.writes_upper_threshold,item.writes_lower_threshold,item.increase_writes_with,item.decrease_writes_with,item.base_writes);
+
+                    // If we are out of decreases set the new capacity to the max of the new and old capacities
+                    if (remainDecreaseNum === 0) {
+                        newReadCapa = Math.max(readCapa, newReadCapa);
+                        newWriteCapa = Math.max(writeCapa, newWriteCapa);
+                    }
+
                     if (readCapa === newReadCapa && writeCapa === newWriteCapa) {
                         callback({
                                 tableName : item.tableName,
