@@ -100,11 +100,11 @@ exports.getTask_consumedWriteCapa = function(tableName, callback) {
 };
 
 // calculate Capacity to update
-exports.getTask_newCapa = function(capa,used,upperThsd,lowerThsd,increseAmt,decreseAmt,base) {
+exports.getTask_newCapa = function(capa,used,upperThsd,lowerThsd,increseAmt,decreseAmt,base,high) {
     var rate = (used/capa)*100;
     if ( rate > upperThsd )
     {
-        return Math.round(capa+(capa*(increseAmt/100)));
+        return Math.min(Math.round(capa+(capa*(increseAmt/100))),high);
     }
     else if ( rate < lowerThsd )
     {

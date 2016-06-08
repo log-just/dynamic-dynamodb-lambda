@@ -39,8 +39,8 @@ exports.handler = function(event, context) {
 
             // 2. calculate new read/write Capacity
             function(readCapa,readUsed,writeCapa,writeUsed,status,remainDecreaseNum,callback){
-                var newReadCapa= tasks.getTask_newCapa(readCapa,readUsed,item.reads_upper_threshold,item.reads_lower_threshold,item.increase_reads_with,item.decrease_reads_with,item.base_reads);
-                var newWriteCapa= tasks.getTask_newCapa(writeCapa,writeUsed,item.writes_upper_threshold,item.writes_lower_threshold,item.increase_writes_with,item.decrease_writes_with,item.base_writes);
+                var newReadCapa= tasks.getTask_newCapa(readCapa,readUsed,item.reads_upper_threshold,item.reads_lower_threshold,item.increase_reads_with,item.decrease_reads_with,item.base_reads,item.high_reads);
+                var newWriteCapa= tasks.getTask_newCapa(writeCapa,writeUsed,item.writes_upper_threshold,item.writes_lower_threshold,item.increase_writes_with,item.decrease_writes_with,item.base_writes,item.high_reads);
 
                 if (status !== 'ACTIVE') {
                     callback({
